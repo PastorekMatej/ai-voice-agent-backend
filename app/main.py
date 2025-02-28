@@ -20,7 +20,8 @@ import tempfile
 import logging
 import subprocess
 from pathlib import Path
->>>>>>> 04f82b2 (new image feature)
+from google.cloud import texttospeech
+from fastapi.responses import FileResponse
 
 # Configuration du logger au début du fichier
 logging.basicConfig(level=logging.DEBUG)
@@ -90,14 +91,61 @@ ssl_context = ssl.create_default_context(cafile=certifi.where())
 
 app = FastAPI()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Add CORS middleware configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # React app's URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
-@app.get("/")
-async def read_root():
-    return {"message": "Welcome to the AI Voice Agent!"}
+engine = pyttsx3.init()
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
+# Add this class for request validation
+class ChatMessage(BaseModel):
+    message: str
+
+def text_to_speech(text):
+    """Converts text to speech using Google Cloud Text-to-Speech."""
+    client = texttospeech.TextToSpeechClient()
+
+    input_text = texttospeech.SynthesisInput(text=text)
+
+    # Configure the voice request, select the language code ("fr-FR") and the ssml voice gender
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="fr-FR",
+        ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+    )
+
+    # Select the type of audio file you want returned
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3
+    )
+
+    # Perform the text-to-speech request on the text input with the selected voice parameters and audio file type
+    response = client.synthesize_speech(
+        input=input_text, voice=voice, audio_config=audio_config
+    )
+
+    # The response's audio_content is binary.
+    with open("output.mp3", "wb") as out:
+        # Write the response to the output file.
+        out.write(response.audio_content)
+        logger.debug('Audio content written to file "output.mp3"')
+
+    return "output.mp3"
+
+def speech_to_text(audio_file):
+    """Converts speech (audio file) to text."""
+    recognizer = sr.Recognizer()
+    with sr.AudioFile(audio_file) as source:
+        audio = recognizer.record(source)
+    return recognizer.recognize_google(audio)
+
+@app.websocket("/chat")
+async def chat_endpoint(websocket: WebSocket):
+    """Handles real-time WebSocket communication for voice chat."""
     await websocket.accept()
     while True:
         data = await websocket.receive_bytes()  # Adjust to receive binary data
@@ -240,6 +288,20 @@ async def transcribe_audio(audio: UploadFile = File(...)):
     except Exception as e:
         logger.error(f"Error in transcribe endpoint: {str(e)}")
         raise HTTPException(status_code=422, detail=str(e))
+
+@app.post("/api/synthesize")
+async def synthesize_text(message: ChatMessage):
+    """Handles HTTP POST requests for text-to-speech synthesis."""
+    logger.debug(f"Received request for TTS with message: {message.message}")
+    try:
+        audio_file_path = text_to_speech(message.message)
+        return FileResponse(audio_file_path, media_type='audio/mpeg', filename='output.mp3')
+    except Exception as e:
+        logger.error(f"Error in TTS endpoint: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
 # Entry point for running with Uvicorn
 if __name__ == "__main__":
