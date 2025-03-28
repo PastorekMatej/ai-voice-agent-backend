@@ -1,0 +1,38 @@
+         38877 function calls (36929 primitive calls) in 1.668 seconds
+
+   Ordered by: cumulative time
+   List reduced from 656 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    1.667    1.667 main.py:232(chat)
+        1    0.000    0.000    1.665    1.665 _utils.py:245(wrapper)
+        1    0.000    0.000    1.665    1.665 completions.py:837(create)
+        1    0.000    0.000    1.621    1.621 _base_client.py:1276(post)
+        1    0.000    0.000    1.620    1.620 _base_client.py:953(request)
+        1    0.000    0.000    1.620    1.620 _base_client.py:975(_request)
+        1    0.000    0.000    1.608    1.608 _client.py:879(send)
+        1    0.000    0.000    1.603    1.603 _client.py:930(_send_handling_auth)
+        1    0.000    0.000    1.603    1.603 _client.py:964(_send_handling_redirects)
+        1    0.000    0.000    1.603    1.603 _client.py:1001(_send_single_request)
+        1    0.000    0.000    1.602    1.602 default.py:230(handle_request)
+        1    0.000    0.000    1.602    1.602 connection_pool.py:199(handle_request)
+        1    0.000    0.000    1.594    1.594 connection.py:69(handle_request)
+        1    0.000    0.000    1.484    1.484 http11.py:65(handle_request)
+        4    0.000    0.000    1.482    0.371 http11.py:209(_receive_event)
+        3    0.000    0.000    1.481    0.494 sync.py:124(read)
+        3    0.000    0.000    1.481    0.494 ssl.py:1278(recv)
+        3    0.000    0.000    1.481    0.494 ssl.py:1129(read)
+        3    1.481    0.494    1.481    0.494 {method 'read' of '_ssl._SSLSocket' objects}
+        1    0.000    0.000    1.480    1.480 http11.py:170(_receive_response_headers)
+        1    0.000    0.000    0.110    0.110 connection.py:105(_connect)
+        1    0.000    0.000    0.083    0.083 sync.py:188(connect_tcp)
+        1    0.000    0.000    0.083    0.083 socket.py:822(create_connection)
+        1    0.000    0.000    0.070    0.070 socket.py:958(getaddrinfo)
+        1    0.070    0.070    0.070    0.070 {built-in method _socket.getaddrinfo}
+        1    0.000    0.000    0.044    0.044 _transform.py:74(maybe_transform)
+        1    0.000    0.000    0.044    0.044 _transform.py:88(transform)
+    357/1    0.003    0.000    0.044    0.044 _transform.py:145(_transform_recursive)
+     38/2    0.001    0.000    0.043    0.022 _transform.py:241(_transform_typeddict)
+        1    0.000    0.000    0.024    0.024 sync.py:144(start_tls)
+
+

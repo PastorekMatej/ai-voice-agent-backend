@@ -1,0 +1,38 @@
+         573808 function calls (549037 primitive calls) in 84.162 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1568 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+1223/1222    0.025    0.000   82.426    0.067 base_events.py:1947(_run_once)
+     1222    0.014    0.000   51.076    0.042 selectors.py:310(select)
+     1222    0.005    0.000   51.060    0.042 selectors.py:304(_select)
+     1245   51.022    0.041   51.022    0.041 {built-in method select.select}
+1443/1410    0.101    0.000   31.306    0.022 {method 'run' of '_contextvars.Context' objects}
+     1377    0.006    0.000   31.219    0.023 events.py:87(_run)
+      125    0.000    0.000   31.121    0.249 h11_impl.py:401(run_asgi)
+      125    0.000    0.000   31.121    0.249 proxy_headers.py:27(__call__)
+      125    0.000    0.000   31.119    0.249 applications.py:1051(__call__)
+      125    0.000    0.000   31.119    0.249 applications.py:108(__call__)
+      125    0.000    0.000   31.119    0.249 errors.py:150(__call__)
+      125    0.000    0.000   31.118    0.249 cors.py:75(__call__)
+      125    0.000    0.000   31.118    0.249 exceptions.py:46(__call__)
+  250/125    0.000    0.000   31.117    0.249 _exception_handler.py:31(wrapped_app)
+      125    0.000    0.000   31.117    0.249 routing.py:711(__call__)
+      125    0.001    0.000   31.117    0.249 routing.py:717(app)
+      125    0.000    0.000   31.115    0.249 routing.py:279(handle)
+      125    0.000    0.000   31.115    0.249 routing.py:69(app)
+      125    0.001    0.000   31.114    0.249 routing.py:72(app)
+       26    0.001    0.000   31.071    1.195 routing.py:240(app)
+       23    0.000    0.000   31.035    1.349 routing.py:204(run_endpoint_function)
+       23    0.001    0.000   31.034    1.349 interaction_profiler.py:172(wrapper)
+       12    0.000    0.000   18.347    1.529 method.py:98(__call__)
+       12    0.000    0.000   18.346    1.529 grpc_helpers.py:73(error_remapped_callable)
+       12    0.000    0.000   18.345    1.529 _interceptor.py:268(__call__)
+       12    0.000    0.000   18.345    1.529 _interceptor.py:287(_with_call)
+       12    0.001    0.000   18.345    1.529 grpc.py:47(intercept_unary_unary)
+       12    0.000    0.000   18.303    1.525 _interceptor.py:305(continuation)
+       12    0.000    0.000   18.302    1.525 _channel.py:1183(with_call)
+       12   17.728    1.477   18.301    1.525 _channel.py:1128(_blocking)
+
+

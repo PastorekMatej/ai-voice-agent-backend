@@ -1,0 +1,7 @@
+Interaction int_1743075918677 Total Time: 1.6682 seconds
+
+Phase Breakdown:
+  start_processing: 0.0000s (elapsed: 0.0000s)
+  openai_response_received: 1.6676s (elapsed: 1.6676s)
+  end_processing: 0.0003s (elapsed: 1.6679s)
+  Response received: 0.0004s (total: 1.6682s)

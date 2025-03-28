@@ -1,0 +1,25 @@
+Session session_1743078901076 Total Time: 83.4326 seconds
+
+Endpoints Called: transcribe_audio, chat, chat, text_to_speech
+
+Phase Breakdown:
+  transcribe_audio - start_processing: 0.0032s (elapsed: 0.0032s)
+  transcribe_audio - start_file_processing: 0.0003s (elapsed: 0.0035s)
+  transcribe_audio - start_ffmpeg_conversion: 0.0043s (elapsed: 0.0078s)
+  transcribe_audio - start_speech_api_call: 2.1521s (elapsed: 2.1598s)
+  transcribe_audio - speech_api_response_received: 3.9749s (elapsed: 6.1347s)
+  transcribe_audio - end_processing: 0.0008s (elapsed: 6.1355s)
+  chat - start_processing: 0.0166s (elapsed: 6.1520s)
+  chat - start_openai_api_call: 0.0009s (elapsed: 6.1529s)
+  chat - openai_response_received: 3.8781s (elapsed: 10.0309s)
+  chat - end_processing: 0.0003s (elapsed: 10.0313s)
+  chat - start_processing: 0.0063s (elapsed: 10.0376s)
+  chat - start_openai_api_call: 0.0008s (elapsed: 10.0384s)
+  chat - openai_response_received: 1.5020s (elapsed: 11.5405s)
+  chat - end_processing: 0.0004s (elapsed: 11.5409s)
+  text_to_speech - start_processing: 0.0115s (elapsed: 11.5524s)
+  text_to_speech - start_tts_processing: 0.9557s (elapsed: 12.5080s)
+  text_to_speech - tts_complete: 0.0010s (elapsed: 12.5091s)
+  text_to_speech - end_processing: 0.0003s (elapsed: 12.5094s)
+
+Total interaction time: 83.4326s

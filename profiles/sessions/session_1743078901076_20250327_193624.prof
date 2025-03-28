@@ -1,0 +1,38 @@
+         149873 function calls (145270 primitive calls) in 83.373 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1996 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+1345/1342    0.029    0.000   77.293    0.058 base_events.py:1947(_run_once)
+1343/1342    0.016    0.000   70.685    0.053 selectors.py:310(select)
+     1342    0.042    0.000   70.609    0.053 selectors.py:304(_select)
+     1345   70.518    0.052   70.518    0.052 {built-in method select.select}
+1372/1364    0.028    0.000    6.561    0.005 {method 'run' of '_contextvars.Context' objects}
+1362/1361    0.007    0.000    6.549    0.005 events.py:87(_run)
+    21/20    0.000    0.000    6.452    0.323 h11_impl.py:401(run_asgi)
+       20    0.000    0.000    6.452    0.323 proxy_headers.py:27(__call__)
+       20    0.000    0.000    6.452    0.323 applications.py:1051(__call__)
+       20    0.000    0.000    6.452    0.323 applications.py:108(__call__)
+       20    0.000    0.000    6.452    0.323 errors.py:150(__call__)
+       20    0.000    0.000    6.452    0.323 cors.py:75(__call__)
+       18    0.000    0.000    6.449    0.358 cors.py:142(simple_response)
+       18    0.000    0.000    6.449    0.358 exceptions.py:46(__call__)
+    36/18    0.000    0.000    6.449    0.358 _exception_handler.py:31(wrapped_app)
+       18    0.000    0.000    6.449    0.358 routing.py:711(__call__)
+       18    0.000    0.000    6.449    0.358 routing.py:717(app)
+       18    0.000    0.000    6.448    0.358 routing.py:279(handle)
+       18    0.000    0.000    6.448    0.358 routing.py:69(app)
+       18    0.000    0.000    6.448    0.358 routing.py:72(app)
+        3    0.000    0.000    6.347    2.116 routing.py:240(app)
+        3    0.000    0.000    6.343    2.114 routing.py:204(run_endpoint_function)
+        3    0.000    0.000    6.343    2.114 interaction_profiler.py:172(wrapper)
+        1    0.000    0.000    6.132    6.132 main.py:332(transcribe_audio)
+        2    0.000    0.000    5.382    2.691 main.py:232(chat)
+        2    0.000    0.000    5.376    2.688 _utils.py:245(wrapper)
+        2    0.000    0.000    5.376    2.688 completions.py:837(create)
+        2    0.000    0.000    5.333    2.667 _base_client.py:1276(post)
+        2    0.000    0.000    5.333    2.666 _base_client.py:953(request)
+        2    0.000    0.000    5.333    2.666 _base_client.py:975(_request)
+
+

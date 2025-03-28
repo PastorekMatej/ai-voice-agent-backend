@@ -1,0 +1,38 @@
+         15732 function calls (15297 primitive calls) in 4.044 seconds
+
+   Ordered by: cumulative time
+   List reduced from 927 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    4.041    4.041 main.py:329(transcribe_audio)
+      3/2    0.000    0.000    1.836    0.918 threading.py:998(_bootstrap)
+      3/2    0.008    0.003    1.836    0.918 threading.py:1025(_bootstrap_inner)
+      3/2    0.006    0.002    1.829    0.914 threading.py:981(run)
+        1    0.000    0.000    1.810    1.810 subprocess.py:512(run)
+        1    0.000    0.000    1.787    1.787 subprocess.py:1175(communicate)
+        1    0.000    0.000    1.787    1.787 subprocess.py:1613(_communicate)
+        2    0.000    0.000    1.786    0.893 threading.py:1056(join)
+        2    0.000    0.000    1.786    0.893 {method 'join' of '_thread._ThreadHandle' objects}
+      2/1    0.000    0.000    1.779    1.779 subprocess.py:1608(_readerthread)
+      3/2    1.778    0.593    1.779    0.889 {method 'read' of '_io.TextIOWrapper' objects}
+        1    0.000    0.000    1.763    1.763 client.py:736(recognize)
+        1    0.000    0.000    1.761    1.761 method.py:98(__call__)
+        1    0.000    0.000    1.761    1.761 retry_unary.py:286(retry_wrapped_func)
+        1    0.000    0.000    1.761    1.761 retry_unary.py:85(retry_target)
+        1    0.000    0.000    1.761    1.761 timeout.py:101(func_with_timeout)
+        1    0.000    0.000    1.761    1.761 grpc_helpers.py:73(error_remapped_callable)
+        1    0.000    0.000    1.761    1.761 _interceptor.py:268(__call__)
+        1    0.000    0.000    1.761    1.761 _interceptor.py:287(_with_call)
+        1    0.000    0.000    1.761    1.761 grpc.py:47(intercept_unary_unary)
+        1    0.000    0.000    1.757    1.757 _interceptor.py:305(continuation)
+        1    0.000    0.000    1.757    1.757 _channel.py:1183(with_call)
+        1    1.706    1.706    1.757    1.757 _channel.py:1128(_blocking)
+        1    0.000    0.000    0.446    0.446 client.py:561(__init__)
+        1    0.000    0.000    0.445    0.445 grpc.py:127(__init__)
+        1    0.000    0.000    0.349    0.349 grpc.py:273(create_channel)
+        1    0.000    0.000    0.349    0.349 grpc_helpers.py:303(create_channel)
+        1    0.000    0.000    0.280    0.280 __init__.py:2122(secure_channel)
+        1    0.247    0.247    0.267    0.267 _channel.py:2053(__init__)
+     33/8    0.000    0.000    0.085    0.011 <frozen importlib._bootstrap>:1390(_handle_fromlist)
+
+

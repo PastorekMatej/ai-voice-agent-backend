@@ -1,0 +1,10 @@
+Interaction int_1743075914573 Total Time: 4.0443 seconds
+
+Phase Breakdown:
+  start_processing: 0.0003s (elapsed: 0.0003s)
+  start_file_processing: 0.0020s (elapsed: 0.0023s)
+  start_ffmpeg_conversion: 0.0079s (elapsed: 0.0102s)
+  start_speech_api_call: 2.2640s (elapsed: 2.2743s)
+  speech_api_response_received: 1.7680s (elapsed: 4.0423s)
+  end_processing: 0.0009s (elapsed: 4.0432s)
+  Response received: 0.0011s (total: 4.0443s)

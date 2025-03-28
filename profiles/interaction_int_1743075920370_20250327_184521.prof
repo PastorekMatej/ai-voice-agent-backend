@@ -1,0 +1,38 @@
+         35647 function calls (33728 primitive calls) in 1.416 seconds
+
+   Ordered by: cumulative time
+   List reduced from 593 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    1.416    1.416 main.py:232(chat)
+        1    0.000    0.000    1.413    1.413 _utils.py:245(wrapper)
+        1    0.000    0.000    1.413    1.413 completions.py:837(create)
+        1    0.000    0.000    1.386    1.386 _base_client.py:1276(post)
+        1    0.000    0.000    1.386    1.386 _base_client.py:953(request)
+        1    0.000    0.000    1.386    1.386 _base_client.py:975(_request)
+        1    0.000    0.000    1.378    1.378 _client.py:879(send)
+        1    0.000    0.000    1.376    1.376 _client.py:930(_send_handling_auth)
+        1    0.000    0.000    1.376    1.376 _client.py:964(_send_handling_redirects)
+        1    0.000    0.000    1.376    1.376 _client.py:1001(_send_single_request)
+        1    0.000    0.000    1.375    1.375 default.py:230(handle_request)
+        1    0.000    0.000    1.374    1.374 connection_pool.py:199(handle_request)
+        1    0.000    0.000    1.374    1.374 connection.py:69(handle_request)
+        1    0.000    0.000    1.374    1.374 http11.py:65(handle_request)
+        3    0.000    0.000    1.369    0.456 http11.py:209(_receive_event)
+        1    0.000    0.000    1.368    1.368 http11.py:170(_receive_response_headers)
+        2    0.000    0.000    1.368    0.684 sync.py:124(read)
+        2    0.000    0.000    1.368    0.684 ssl.py:1278(recv)
+        2    0.000    0.000    1.368    0.684 ssl.py:1129(read)
+        2    1.368    0.684    1.368    0.684 {method 'read' of '_ssl._SSLSocket' objects}
+        1    0.000    0.000    0.027    0.027 _transform.py:74(maybe_transform)
+        1    0.000    0.000    0.027    0.027 _transform.py:88(transform)
+    357/1    0.002    0.000    0.027    0.027 _transform.py:145(_transform_recursive)
+     38/2    0.001    0.000    0.027    0.013 _transform.py:241(_transform_typeddict)
+       38    0.002    0.000    0.012    0.000 typing.py:2398(get_type_hints)
+       22    0.000    0.000    0.011    0.001 __init__.py:1640(_log)
+       21    0.000    0.000    0.011    0.001 __init__.py:1497(debug)
+  919/192    0.002    0.000    0.009    0.000 typing.py:463(_eval_type)
+      192    0.001    0.000    0.009    0.000 typing.py:1047(_evaluate)
+       22    0.000    0.000    0.009    0.000 __init__.py:1666(handle)
+
+
