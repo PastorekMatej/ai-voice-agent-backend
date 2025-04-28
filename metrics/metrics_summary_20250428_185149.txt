@@ -1,0 +1,80 @@
+Performance Metrics Summary - 2025-04-28T18:51:49.384535
+================================================================================
+
+Module.Function: transcribe.file_processing
+--------------------------------------------------
+  count: 3
+  min: 0.00
+  max: 0.06
+  mean: 0.02
+  median: 0.00
+  stdev: 0.03
+  total: 0.06
+  last_execution: 2025-04-28T18:06:49.426519
+
+Module.Function: transcribe.audio_conversion
+--------------------------------------------------
+  count: 3
+  min: 81.53
+  max: 2269.10
+  mean: 811.69
+  median: 84.45
+  stdev: 1262.15
+  total: 2435.08
+  last_execution: 2025-04-28T18:06:49.513196
+
+Module.Function: transcribe.google_api_call
+--------------------------------------------------
+  count: 3
+  min: 1492.40
+  max: 2080.67
+  mean: 1715.80
+  median: 1574.34
+  stdev: 318.63
+  total: 5147.41
+  last_execution: 2025-04-28T18:06:51.099190
+
+Module.Function: chat.setup
+--------------------------------------------------
+  count: 6
+  min: 0.01
+  max: 0.01
+  mean: 0.01
+  median: 0.01
+  stdev: 0.00
+  total: 0.05
+  last_execution: 2025-04-28T18:06:52.341111
+
+Module.Function: chat.openai_api_call
+--------------------------------------------------
+  count: 6
+  min: 1052.67
+  max: 1516.23
+  mean: 1293.52
+  median: 1303.08
+  stdev: 154.01
+  total: 7761.11
+  last_execution: 2025-04-28T18:06:53.858259
+
+Module.Function: tts.text_to_speech
+--------------------------------------------------
+  count: 3
+  min: 0.01
+  max: 0.02
+  mean: 0.01
+  median: 0.01
+  stdev: 0.01
+  total: 0.03
+  last_execution: 2025-04-28T18:06:53.865545
+
+Module.Function: synthesize.tts_processing
+--------------------------------------------------
+  count: 3
+  min: 0.76
+  max: 1.10
+  mean: 0.91
+  median: 0.87
+  stdev: 0.17
+  total: 2.73
+  last_execution: 2025-04-28T18:06:53.866629
+

@@ -1,0 +1,78 @@
+[33mcommit c2384f5b19064c4e29f94d672aae02657775141b[m[33m ([m[1;36mHEAD[m[33m, [m[1;35mrefs/stash[m[33m)[m
+Merge: da8e7f1 193bf79
+Author: PastorekMatej <matejpastorek22@gmail.com>
+Date:   Sat Apr 26 15:56:34 2025 +0700
+
+    WIP on Initial: da8e7f1 text file generated but no standardised audio files for benchmarking
+
+[33mcommit 193bf79b9d40026489d64686cb6dd344ac623cf8[m
+Author: PastorekMatej <matejpastorek22@gmail.com>
+Date:   Sat Apr 26 15:56:34 2025 +0700
+
+    index on Initial: da8e7f1 text file generated but no standardised audio files for benchmarking
+
+[33mcommit da8e7f1e7fea723808b17ac0026a7b487761df12[m[33m ([m[1;32mInitial[m[33m)[m
+Author: PastorekMatej <matejpastorek22@gmail.com>
+Date:   Sat Apr 26 15:18:00 2025 +0700
+
+    text file generated but no standardised audio files for benchmarking
+
+[33mcommit ecc0f3f5bd68342cf54b3f7b071ff0ad1ef8e56b[m
+Author: PastorekMatej <matejpastorek22@gmail.com>
+Date:   Sat Apr 26 10:21:25 2025 +0700
+
+    removing all features related to performance analysis
+
+[33mcommit c525c14e603e93162e81cfcc7ac5a3d4fbb5acdc[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Fri Mar 28 16:01:48 2025 +0700
+
+    Initial commit for benchmarking
+
+[33mcommit 5078e8f12993cc5c77c7800f96dfe0c9a57bc912[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Fri Feb 28 17:35:06 2025 +0700
+
+    version avec voix française OK
+
+[33mcommit 8979b6c0ab96ea9f90b2a2cf5f7e12b466df6113[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Tue Feb 25 20:55:35 2025 +0700
+
+    Implementation francais v2
+
+[33mcommit 04f82b285a73cdb744fbf0672c4ab4fd3780ac64[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Tue Feb 25 19:56:00 2025 +0700
+
+    new image feature
+
+[33mcommit 00291544fa27375743cf8bf0dff30162f566cc55[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Mon Feb 24 20:02:18 2025 +0700
+
+    no sense
+
+[33mcommit 83433d739bcf86cfbe2ab049219bf4db8fe77df4[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Sun Feb 23 23:16:05 2025 +0700
+
+    Stabilize version v1.0.0
+
+[33mcommit 37ceacdbec6fb015d56aba0b91bc417155a27025[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Mon Feb 17 19:24:34 2025 +0700
+
+    Make start.sh executable
+
+[33mcommit 074ed4f11693a88203efad6298cb5e289b4893bb[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Mon Feb 17 19:04:14 2025 +0700
+
+    Initial commit
+
+[33mcommit 5027439e2a38da45618b8993edd93fb244004de7[m
+Author: Matej_Pastorek <matejpastorek22@gmail.com>
+Date:   Mon Feb 17 18:19:47 2025 +0700
+
+    Initial commit
