@@ -1,3 +1,7 @@
+
+## Status
+🚧 Work in progress – baseline code pushed, README and documentation coming soon.
+
 AI agent used as a teaching assistant for teachers of French language. 
 The assistant could be deployed for communication and more accurate identification of recurent errors. 
 
