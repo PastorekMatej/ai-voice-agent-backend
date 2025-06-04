@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+.env.local
+.git/
+.gitignore
+.vscode/
+.idea/
+*.log
+README.md
+build-docker.sh
+test-docker.sh
+start.sh
