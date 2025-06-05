@@ -30,80 +30,104 @@ from .services import (
     speech_to_text, chat_completion
 )
 import traceback
+from .config import config  # DOCKER IMPLEMENTATION: Import centralized config
 
-
-# Configuration du logger au début du fichier
+# DOCKER IMPLEMENTATION: Configure logging for container environment
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Configurer le chemin vers le fichier .env parent
+# DOCKER IMPLEMENTATION: Conditional .env loading for container compatibility
 env_path = Path(__file__).parent.parent / '.env'
-load_dotenv(dotenv_path=env_path)
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
 
-# Définir directement le chemin des credentials sans passer par la variable d'environnement
-credentials_path = r"C:\Users\pasto\ai-voice-agent\backend\ai-voice-agent-451616-5ab9c7176a3d.json"
+# DOCKER IMPLEMENTATION: Dynamic credentials path for container environment
+credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", 
+                            str(Path(__file__).parent.parent / "ai-voice-agent-451616-5ab9c7176a3d.json"))
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
-if not os.path.exists(credentials_path):
-    raise ValueError(f"Credentials file not found at: {credentials_path}")
 
-# Vérification des variables d'environnement
-openai_key = os.getenv("OPENAI_API_KEY")
+# DOCKER IMPLEMENTATION: Check credentials file existence with container-friendly error handling
+if not os.path.exists(credentials_path):
+    logger.warning(f"DOCKER IMPLEMENTATION: Credentials file not found at: {credentials_path}")
+else:
+    logger.info(f"DOCKER IMPLEMENTATION: Using credentials from: {credentials_path}")
+
+# DOCKER IMPLEMENTATION: Use config instead of direct environment access
+openai_key = config.OPENAI_API_KEY
 
 if not openai_key:
     raise ValueError("OPENAI_API_KEY not found in environment variables")
 
 # Initialize FastAPI app
-app = FastAPI()
+app = FastAPI(title="AI Voice Agent Backend")  # DOCKER IMPLEMENTATION: Added title
 
-# Configure CORS
+# DOCKER IMPLEMENTATION: Enhanced CORS configuration for container-to-container communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React app URL
+    allow_origins=[
+        "http://localhost:3000",     # DOCKER IMPLEMENTATION: Local frontend
+        "http://localhost:3001",     # DOCKER IMPLEMENTATION: Alternative frontend port  
+        config.FRONTEND_URL,         # DOCKER IMPLEMENTATION: Configurable frontend URL
+        "*"                          # DOCKER IMPLEMENTATION: Allow all origins for container deployment
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # DOCKER IMPLEMENTATION: Explicit methods
     allow_headers=["*"],
 )
 
 # Initialize OpenAI client
-client = OpenAI(
-    api_key=openai_key
-)
+client = OpenAI(api_key=openai_key)
 
-# Test the API key with a simple request
+# DOCKER IMPLEMENTATION: Test API key with container-friendly error handling
 try:
     test_response = client.chat.completions.create(
-        model="gpt-3.5-turbo",  # Using 3.5 for testing as it's cheaper
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": "test"}],
         max_tokens=5
     )
-    print("API Key verified successfully!")
+    logger.info("DOCKER IMPLEMENTATION: API Key verified successfully!")
 except AuthenticationError as e:
-    print(f"API Key verification failed: {str(e)}")
+    logger.error(f"DOCKER IMPLEMENTATION: API Key verification failed: {str(e)}")
     raise ValueError("Invalid API key. Please check your OpenAI API key.")
 except Exception as e:
-    print(f"Unexpected error during API key verification: {str(e)}")
+    logger.error(f"DOCKER IMPLEMENTATION: Unexpected error during API key verification: {str(e)}")
     raise
 
-# Ensure SSL works correctly
+# DOCKER IMPLEMENTATION: SSL context for container environment
 ssl_context = ssl.create_default_context(cafile=certifi.where())
 
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-for voice in voices:
-    print(f"ID: {voice.id}, Name: {voice.name}")
+# DOCKER IMPLEMENTATION: TTS engine initialization with container error handling
+try:
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    for voice in voices:
+        logger.debug(f"DOCKER IMPLEMENTATION: Voice - ID: {voice.id}, Name: {voice.name}")
+except Exception as e:
+    logger.warning(f"DOCKER IMPLEMENTATION: TTS engine initialization failed: {e}")
+    engine = None
 
 # Add this class for request validation
 class ChatMessage(BaseModel):
     message: str
 
+# DOCKER IMPLEMENTATION: Load voice settings with container-friendly path resolution
 voice_settings = load_voice_settings()
+
+# DOCKER IMPLEMENTATION: Health check endpoint for container orchestration
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy", 
+        "service": "ai-voice-agent-backend",
+        "environment": config.ENVIRONMENT
+    }
 
 @measure_performance("ssml")
 def add_natural_pauses(text):
     """Convertit le texte en SSML avec expressivité et pauses naturelles."""
     try:
         with PerformanceTracker("ssml", "preprocessing", {"text_length": len(text)}):
-        # Prétraitement
+            # Prétraitement
             logger.debug(f"Texte original: {text}")
             text = re.sub(r'([.!?])([^\s])', r'\1 \2', text)
             escaped_text = html.escape(text)
@@ -198,8 +222,13 @@ def speech_to_text(audio_file):
 
 @app.get("/")
 async def root():
-    """Test endpoint to verify server is running."""
-    return {"status": "Server is running"}
+    # DOCKER IMPLEMENTATION: Enhanced root endpoint with container info
+    return {
+        "message": "Welcome to the AI Voice Agent!",
+        "status": "healthy",
+        "environment": config.ENVIRONMENT,
+        "available_endpoints": ["/api/chat", "/api/transcribe", "/api/synthesize", "/health"]
+    }
 
 @app.post("/api/chat")
 async def chat(request: Request, message: ChatMessage):
@@ -246,7 +275,7 @@ async def chat(request: Request, message: ChatMessage):
             frequency_penalty = model_params.get('frequency_penalty', 0)
             presence_penalty = model_params.get('presence_penalty', 0)
             
-            # Track API call
+        # Track API call
         with PerformanceTracker("chat", "openai_api_call"):
             # Appel à l'API avec les paramètres configurés
             response = client.chat.completions.create(
@@ -277,13 +306,16 @@ async def chat(request: Request, message: ChatMessage):
             detail=str(e)
         )
 
+# DOCKER IMPLEMENTATION: Fixed WebSocket endpoint with proper indentation
 @app.websocket("/chat")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+    logger.info("DOCKER IMPLEMENTATION: WebSocket connection established")
+    
     try:
         while True:
             data = await websocket.receive_text()
-            print(f"Received WebSocket message: {data}")
+            logger.info(f"DOCKER IMPLEMENTATION: WebSocket received: {data}")
             
             with PerformanceTracker("websocket", "openai_call"):
                 response = client.chat.completions.create(
@@ -292,10 +324,10 @@ async def websocket_endpoint(websocket: WebSocket):
                 )
                 
             ai_text = response.choices[0].message.content
-            print(f"Sending WebSocket response: {ai_text}")
+            logger.info(f"DOCKER IMPLEMENTATION: Sending WebSocket response: {ai_text}")
             await websocket.send_text(ai_text)
     except Exception as e:
-        print(f"WebSocket error: {str(e)}")
+        logger.error(f"DOCKER IMPLEMENTATION: WebSocket error: {str(e)}")
         await websocket.close()
 
 @app.post("/api/transcribe")
@@ -303,9 +335,9 @@ async def transcribe_audio(request: Request, audio: UploadFile = File(...)):
     try:
         # File processing
         with PerformanceTracker("transcribe", "file_processing"):
-            # Vérifier que les credentials Google sont configurés
-            if not credentials_path:
-                    raise Exception("Google Cloud credentials not configured")
+            # DOCKER IMPLEMENTATION: Check Google Cloud credentials for container
+            if not credentials_path or not os.path.exists(credentials_path):
+                raise Exception("Google Cloud credentials not configured or file not found")
         
         # Créer un fichier temporaire pour l'audio WebM
         with tempfile.NamedTemporaryFile(suffix='.webm', delete=False) as webm_file:
@@ -320,35 +352,34 @@ async def transcribe_audio(request: Request, audio: UploadFile = File(...)):
                 with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as wav_file:
                     wav_path = wav_file.name
                 
-                    # Utiliser FFmpeg pour la conversion
-                    ffmpeg_cmd = [
-                        r"C:\Users\pasto\ffmpeg\ffmpeg.exe",
-                        '-y',
-                        '-i', webm_path,
-                        '-acodec', 'pcm_s16le',
-                        '-ar', '16000',
-                        '-ac', '1',
-                        '-f', 'wav',
-                        wav_path
-                    ]
+                # DOCKER IMPLEMENTATION: Use system ffmpeg for container compatibility
+                ffmpeg_cmd = [
+                    'ffmpeg',  # Use system ffmpeg instead of hardcoded Windows path
+                    '-y',
+                    '-i', webm_path,
+                    '-acodec', 'pcm_s16le',
+                    '-ar', '16000',
+                    '-ac', '1',
+                    '-f', 'wav',
+                    wav_path
+                ]
                 
-                    process = subprocess.run(
-                        ffmpeg_cmd,
-                        capture_output=True,
-                        text=True,
-                        shell=True
-                    )
+                process = subprocess.run(
+                    ffmpeg_cmd,
+                    capture_output=True,
+                    text=True
+                )
                 
             if process.returncode != 0:
-                raise Exception(f"FFmpeg conversion failed with code {process.returncode}")
+                raise Exception(f"FFmpeg conversion failed with code {process.returncode}: {process.stderr}")
             
             # Prepare for speech recognition
             with open(wav_path, 'rb') as wav_file:
                 converted_audio_content = wav_file.read()
             
-            client = speech.SpeechClient()
+            client_speech = speech.SpeechClient()
             audio = speech.RecognitionAudio(content=converted_audio_content)
-            config = speech.RecognitionConfig(
+            config_speech = speech.RecognitionConfig(
                 encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
                 sample_rate_hertz=16000,
                 language_code="fr-FR",  # Set to French
@@ -356,7 +387,7 @@ async def transcribe_audio(request: Request, audio: UploadFile = File(...)):
             
             # Speech recognition API call
             with PerformanceTracker("transcribe", "google_api_call"):
-                response = client.recognize(config=config, audio=audio)
+                response = client_speech.recognize(config=config_speech, audio=audio)
                 
             # Cleanup and process results
             os.unlink(webm_path)
@@ -369,11 +400,14 @@ async def transcribe_audio(request: Request, audio: UploadFile = File(...)):
             return {"transcription": transcription}
             
         except Exception as e:
-            # Existing error handling
+            # Clean up temp files on error
+            if 'webm_path' in locals() and os.path.exists(webm_path):
+                os.unlink(webm_path)
+            if 'wav_path' in locals() and os.path.exists(wav_path):
+                os.unlink(wav_path)
             raise HTTPException(status_code=422, detail=f"Error processing audio: {str(e)}")
             
     except Exception as e:
-        # Existing error handling
         raise HTTPException(status_code=422, detail=str(e))
 
 @app.post("/api/synthesize")
@@ -384,9 +418,13 @@ async def synthesize_text(request: Request, message: ChatMessage):
         with PerformanceTracker("synthesize", "tts_processing"):
             audio_content = text_to_speech(message.message, voice_settings)
         logger.debug(f"type(audio_content): {type(audio_content)}")  # Pour debug
-        with open("output.mp3", "wb") as out:
+        
+        # DOCKER IMPLEMENTATION: Use container-friendly temporary file handling
+        output_path = f"/tmp/output_{int(time.time())}.mp3" if os.path.exists('/tmp') else f"output_{int(time.time())}.mp3"
+        
+        with open(output_path, "wb") as out:
             out.write(audio_content)
-        response = FileResponse("output.mp3", media_type='audio/mpeg', filename='output.mp3')
+        response = FileResponse(output_path, media_type='audio/mpeg', filename='output.mp3')
         return response
     except Exception as e:
         logger.error(f"Error in TTS endpoint: {str(e)}")
@@ -396,7 +434,7 @@ async def synthesize_text(request: Request, message: ChatMessage):
             detail=str(e)
         )
 
-# Entry point for running with Uvicorn
+# DOCKER IMPLEMENTATION: Entry point for container deployment
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=5001, reload=True)

@@ -11,7 +11,9 @@ import re
 from .ssml_builder import SSMLBuilder
 import logging
 
-load_dotenv()
+# DOCKER IMPLEMENTATION: Conditional .env loading for container compatibility
+if os.path.exists('.env'):
+    load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
@@ -28,9 +30,34 @@ def process_text(text):
         return "I'm sorry, I couldn't process that."
 
 def load_voice_settings():
+    # DOCKER IMPLEMENTATION: Container-friendly path resolution for voice settings
     config_path = Path(__file__).parent.parent / 'config' / 'voice_settings.json'
-    with open(config_path, 'r') as file:
-        return json.load(file)
+    
+    # DOCKER IMPLEMENTATION: Fallback path for container environment
+    if not config_path.exists():
+        config_path = Path('/app/config/voice_settings.json')
+    
+    # DOCKER IMPLEMENTATION: Default settings if file not found in container
+    if not config_path.exists():
+        logging.warning("DOCKER IMPLEMENTATION: voice_settings.json not found, using defaults")
+        return {
+            "language_code": "fr-FR",
+            "ssml_gender": "MALE",
+            "speaking_rate": 1.0,
+            "pitch": 0.0
+        }
+    
+    try:
+        with open(config_path, 'r') as file:
+            return json.load(file)
+    except Exception as e:
+        logging.error(f"DOCKER IMPLEMENTATION: Error loading voice settings: {e}")
+        return {
+            "language_code": "fr-FR",
+            "ssml_gender": "MALE", 
+            "speaking_rate": 1.0,
+            "pitch": 0.0
+        }
 
 VOICE_SETTINGS = load_voice_settings()
 
