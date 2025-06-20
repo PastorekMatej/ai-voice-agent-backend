@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+
+# Environment Variables
+.env
+.env.local
+
+# IDE and System Files
+.git/
+.dockerignore
+.vscode/
+.idea/
+.DS_Store
+
+# Logs and Metrics
+*.log
+metrics/
+metrics/*
+
+# Audio Files
+*.mp3
+output_*.mp3
+test_audio.mp3
+
+# Service Account Keys and Sensitive Data
+*.json
+ai-voice-agent-*.json
+
+# Build and Test Scripts
+build-docker.sh
+test-docker.sh
+start.sh
+
+# Temporary Files
+qd*
